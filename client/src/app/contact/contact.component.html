@@ -1,0 +1,75 @@
+<div class="section no-pad-bot" id="index-banner">
+  <div *ngIf="messageSent" class="row">
+    <div class="col s12">
+      <div [ngClass]="cardMessage">
+        <span class="white-text">{{ message }}
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <h1 class="header center  teal-text darken-4">Contact</h1>
+    <div class="row center">
+      <h5 class="header col s12 light">Please use the form below to contact me.</h5>
+    </div>
+    <br>
+    <br>
+    <div *ngIf="processing" class="progress">
+      <div class="indeterminate"></div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="section">
+
+    <div class="row">
+      <!---->
+      <form [formGroup]="form" (submit)="onMessageSubmit()" class="grid-example col s12">
+      
+        <div class="row">
+          <div [ngClass]="{'has-error': (form.controls.name.errors && form.controls.name.dirty), 'has-success': !form.controls.name.errors}" class="input-field grid-example col s12 m6">
+            <input autocomplete="off" formControlName="name" name="name" type="text" maxlength="35" required/>
+            <!---->
+            <label for="name">Your Name</label>
+            <!-- Validation -->
+            <!-- <span class="helper-text" data-error="wrong" data-success="right">Helper text</span> -->
+            <ul class="red-text">
+              <li *ngIf="form.controls.name.errors?.required && form.controls.name.dirty">This field is required</li>
+              <li *ngIf="form.controls.name.errors?.minlength && form.controls.name.dirty || form.controls.name.errors?.maxlength && form.controls.name.dirty ">Minimum characters: 3, Maximum characters: 35</li>
+            </ul>
+          </div>
+          <div [ngClass]="{'has-error': (form.controls.email.errors && form.controls.email.dirty), 'has-success': !form.controls.email.errors}" class="input-field grid-example col s12 m6">
+            <input autocomplete="off" name="email" formControlName="email" name="email" type="email" maxlength="30" required />
+            <!---->
+            <label for="email">Your E-mail</label>
+            <ul class="red-text">
+              <li *ngIf="form.controls.email.errors?.required && form.controls.email.dirty">This field is required</li>
+              <li *ngIf="(form.controls.email.errors?.minlength && form.controls.email.dirty || form.controls.email.errors?.maxlength && form.controls.email.dirty ) && form.controls.email.dirty">Minimum characters: 5, Maximum characters: 30</li>
+              <li *ngIf="form.controls.email.errors?.validateEmail && form.controls.email.dirty">This must be a valid e-mail</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="row">
+          <div [ngClass]="{'has-error': (form.controls.message.errors && form.controls.message.dirty), 'has-success': !form.controls.message.errors}" class="input-field col s12">
+            <textarea autocomplete="off" class="materialize-textarea" formControlName="message" name="message" required></textarea>
+            <!---->
+            <label for="message">Your Message</label>
+            <ul class="red-text">
+              <li *ngIf="form.controls.message.errors?.required && form.controls.message.dirty">This field is required</li>
+              <li *ngIf="(form.controls.message.errors?.minlength && form.controls.message.dirty || form.controls.message.errors?.maxlength && form.controls.message.dirty ) && form.controls.message.dirty">Minimum characters: 60</li>
+              <li *ngIf="form.controls.message.errors?.validateMessage && form.controls.message.dirty">This must be a valid e-mail</li>
+            </ul>
+          </div>
+        </div>
+
+        <button class="btn waves-effect waves-light" type="submit" [disabled]="!form.valid">Submit
+          <i class="material-icons right">send</i>
+        </button>
+
+      </form>
+    </div>
+
+  </div>
+
+</div>
